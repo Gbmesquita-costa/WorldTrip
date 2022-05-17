@@ -1,3 +1,5 @@
+require("dotenv").config()
+
 const express = require("express")
 const app = express()
 const porta = 8080
@@ -7,7 +9,7 @@ const bodyparser = require("body-parser")
 
 const db = require("../models/table")
 
-mongoose.connect("mongodb+srv://root:ZLxLsSrLIYo2eLjy@cluster0.427vp.mongodb.net/images", {
+mongoose.connect(process.env.DATABASE_KEY, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {
@@ -19,10 +21,6 @@ mongoose.connect("mongodb+srv://root:ZLxLsSrLIYo2eLjy@cluster0.427vp.mongodb.net
 app.use(bodyparser.text())
 app.use(bodyparser.json())
 app.use(bodyparser.urlencoded({ extended: true }))
-
-app.use(express.json())
-app.use(express.text())
-app.use(express.urlencoded({ extended: true }))
 
 app.use(cors({
     origin: "http://localhost:3001",
@@ -86,5 +84,5 @@ app.post("/create", async (request, response) => {
 })
 
 app.listen(porta, () => {
-    console.log(`Executando o servidor : ${porta}`)
+    console.log(`☀ Executando o servidor : ${porta}`)
 })
